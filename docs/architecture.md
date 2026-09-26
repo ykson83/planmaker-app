@@ -2,11 +2,13 @@
 
 ## 현재 구현 상태
 
-- FastAPI 애플리케이션
-- `GET /health`
+- FastAPI 애플리케이션: `app/main.py`
+- Router: `app/api/health.py`의 `GET /health`
+- 기존 `main.py`는 `uvicorn main:app` 실행 호환성을 위한 진입점
 - 정적 대시보드 화면 (`static/`)
+- `tests/test_application.py`에서 health, 대시보드, 404 응답 테스트
 
-아래 구조는 목표 구조이며, 아직 구현된 기능으로 간주하지 않는다.
+아래 구조에서 `app/`, `app/api/`, `app/main.py`는 구현됐다. 나머지 패키지는 기능 구현과 함께 추가하며, 아직 구현된 기능으로 간주하지 않는다.
 
 ## 목표 패키지 구조
 
