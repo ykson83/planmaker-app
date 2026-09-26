@@ -2,8 +2,11 @@ import os
 from collections.abc import Generator, Mapping
 from functools import lru_cache
 
+from dotenv import load_dotenv
 from sqlalchemy import Engine, URL, create_engine
 from sqlalchemy.orm import Session
+
+load_dotenv()
 
 
 def database_url_from_environment(
