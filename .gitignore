@@ -1,0 +1,18 @@
+# Python runtime
+__pycache__/
+*.py[cod]
+.pytest_cache/
+
+# Local virtual environment
+venv/
+
+# OAuth and database secrets
+.env
+.env.*
+!.env.example
+
+# Editor and OS files
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
