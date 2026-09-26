@@ -29,6 +29,7 @@ User 1 ── N OAuthIdentity
 User 1 ── N Plan               (creator)
 User N ── N PlanParticipant ── 1 Plan
 User 1 ── N Notification
+Plan 1 ── N PlanInvitationLink (구현 예정)
 ```
 
 ### User
@@ -39,7 +40,7 @@ User 1 ── N Notification
 ### OAuthIdentity
 
 - 외부 로그인 계정 연결 정보
-- 제공자: `KAKAO`, `NAVER`, `GOOGLE`, `APPLE`
+- 지원할 제공자: `KAKAO`, `NAVER`, `GOOGLE`, `APPLE`; 초기 활성 제공자: 카카오, 네이버, Google
 - `(provider, provider_user_id)`는 고유하다.
 
 ### Plan
@@ -54,6 +55,12 @@ User 1 ── N Notification
 - 응답 상태: `PENDING`, `ACCEPTED`, `DECLINED`
 - 한 사용자는 동일 Plan에 한 번만 참여한다.
 
+### PlanInvitationLink
+
+- 미가입자에게 공유할 약속 초대 링크 지원 엔터티
+- 무작위 원본 토큰 대신 그 해시를 저장하고, 생성 뒤 7일 후 만료한다.
+- 링크 사용자는 OAuth 로그인과 닉네임 온보딩 후 참여를 확인하며, 확인 시 `ACCEPTED` 참여자로 추가된다.
+
 ### Notification
 
 - 초대, 참여 응답, 약속 변경·취소를 사용자에게 전달하기 위한 서비스 내 알림
@@ -66,7 +73,7 @@ OAuth 제공자 로그인
 → FastAPI callback
 → OAuthIdentity 조회 또는 생성
 → 첫 로그인이라면 닉네임 온보딩
-→ Planmaker 로그인 세션 또는 토큰 발급
+→ Planmaker 서버 세션 발급
 ```
 
-OAuth 공급자 토큰은 서버에서만 다루며, 클라이언트에는 Planmaker 인증 수단만 전달한다.
+OAuth 공급자 토큰은 서버에서만 다룬다. 로그인 상태는 불투명한 서버 세션 ID를 `HttpOnly` 쿠키에 보관해 유지하며, 운영 환경에서는 `Secure`·`SameSite=Lax`를 적용한다. 상태 변경 요청은 CSRF 토큰 검증을 거친다.
