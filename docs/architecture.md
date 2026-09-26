@@ -8,6 +8,7 @@
 - 정적 대시보드 화면 (`static/`)
 - `tests/test_application.py`에서 health, 대시보드, 404 응답 테스트
 - `compose.yaml`에서 MySQL 8.4 개발 환경을 제공
+- `app/db/`의 SQLAlchemy Base·세션 의존성 및 `alembic/` migration 기반
 
 아래 구조에서 `app/`, `app/api/`, `app/main.py`는 구현됐다. 나머지 패키지는 기능 구현과 함께 추가하며, 아직 구현된 기능으로 간주하지 않는다.
 
