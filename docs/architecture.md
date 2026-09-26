@@ -7,6 +7,7 @@
 - 기존 `main.py`는 `uvicorn main:app` 실행 호환성을 위한 진입점
 - 정적 대시보드 화면 (`static/`)
 - `tests/test_application.py`에서 health, 대시보드, 404 응답 테스트
+- `compose.yaml`에서 MySQL 8.4 개발 환경을 제공
 
 아래 구조에서 `app/`, `app/api/`, `app/main.py`는 구현됐다. 나머지 패키지는 기능 구현과 함께 추가하며, 아직 구현된 기능으로 간주하지 않는다.
 
@@ -79,3 +80,14 @@ OAuth 제공자 로그인
 ```
 
 OAuth 공급자 토큰은 서버에서만 다룬다. 로그인 상태는 불투명한 서버 세션 ID를 `HttpOnly` 쿠키에 보관해 유지하며, 운영 환경에서는 `Secure`·`SameSite=Lax`를 적용한다. 상태 변경 요청은 CSRF 토큰 검증을 거친다.
+
+## 로컬 MySQL 실행
+
+`.env.example`을 `.env`로 복사한 뒤 `MYSQL_USER`, `MYSQL_PASSWORD`, `MYSQL_ROOT_PASSWORD`에 로컬 전용 값을 설정한다. `.env`는 Git에서 제외된다.
+
+```powershell
+docker compose up -d mysql
+docker compose ps
+```
+
+MySQL은 `utf8mb4`와 `utf8mb4_0900_ai_ci`로 실행되며, `planmaker_mysql_data` named volume에 데이터를 보관한다.
