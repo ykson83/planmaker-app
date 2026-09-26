@@ -5,6 +5,7 @@ from sqlalchemy import create_engine, pool
 
 from app.db.base import Base
 from app.db.session import database_url_from_environment
+import app.domain
 
 config = context.config
 
