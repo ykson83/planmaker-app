@@ -34,6 +34,7 @@ User 1 ── N Plan               (creator)
 User N ── N PlanParticipant ── 1 Plan
 User 1 ── N Notification
 Plan 1 ── N PlanInvitationLink (구현 예정)
+User 1 ── N AuthSession
 ```
 
 ### User
